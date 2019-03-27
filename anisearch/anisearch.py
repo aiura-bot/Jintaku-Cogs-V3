@@ -241,7 +241,10 @@ class AniSearch(BaseCog):
                     embed.add_field(name="Streaming and/or Info sites", value=external_links)
                 if anime_manga["bannerImage"]:
                     embed.set_image(url=anime_manga["bannerImage"])
-                embed.add_field(name="You can find out more", value=f"[Anilist]({link}), [MAL](https://myanimelist.net/{cmd.lower()}/{anime_manga['idMal']}), Kitsu (Soon™)")
+                if cmd == "ANIME":
+                    embed.add_field(name="You can find out more", value=f"[Anilist]({link}), [MAL](https://myanimelist.net/{cmd.lower()}/{anime_manga['idMal']}), [Simkl](https://api.simkl.com/redirect?mal={anime_manga['idMal']})")
+                else:
+                    embed.add_field(name="You can find out more", value=f"[Anilist]({link}), [MAL](https://myanimelist.net/{cmd.lower()}/{anime_manga['idMal']})")
                 embeds.append(embed)
 
             return embeds, data

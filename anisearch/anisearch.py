@@ -331,7 +331,7 @@ class AniSearch(BaseCog):
 
     @commands.command()
     @commands.bot_has_permissions(embed_links=True, add_reactions=True)
-    async def anime(self, ctx, *, entered_title):
+    async def anianime(self, ctx, *, entered_title):
         """Searches for anime using Anilist"""
 
         try:
@@ -348,7 +348,7 @@ class AniSearch(BaseCog):
 
     @commands.command()
     @commands.bot_has_permissions(embed_links=True, add_reactions=True)
-    async def manga(self, ctx, *, entered_title):
+    async def animanga(self, ctx, *, entered_title):
         """Searches for manga using Anilist"""
 
         try:
@@ -380,7 +380,7 @@ class AniSearch(BaseCog):
 
     @commands.command()
     @commands.bot_has_permissions(embed_links=True, add_reactions=True)
-    async def user(self, ctx, *, entered_title):
+    async def aniuser(self, ctx, *, entered_title):
         """Searches users using Anilist"""
 
         try:

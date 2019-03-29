@@ -269,10 +269,34 @@ class BooruCore:
             content = []
             return content
         else:
+            good_content = []
             for item in content["data"]["children"]:
+                IMGUR_LINKS = "https://imgur.com/", "https://i.imgur.com/", "http://i.imgur.com/", "http://imgur.com", "https://m.imgur.com"
+                GOOD_EXTENSIONS = ".png", ".jpg", ".jpeg", ".gif"
+                url = item["data"]["url"]
+                if url.startswith(IMGUR_LINKS):
+                    if url.endswith(".mp4"):
+                        item["file_url"] = url[:-3] + "gif"
+                    elif url.endswith(".gifv"):
+                        item["file_url"] = url[:-1]
+                    elif url.endswith(GOOD_EXTENSIONS):
+                        item["file_url"] = url
+                    else:
+                    	item["file_url"] = url + ".png"
+                elif url.startswith("https://gfycat.com/"):
+                    url_cut = url[19:]
+                    if url_cut.islower():
+                        continue
+                    item["file_url"] = "https://thumbs.gfycat.com/" + url_cut + "-size_restricted.gif"
+                elif url.endswith(GOOD_EXTENSIONS):
+                    item["file_url"] = url
+                else:
+                    continue
+                good_content.append(item)
                 item["provider"] = provider
                 item["rating"] = rating
-        return content["data"]["children"]
+            content = good_content
+        return content
 
     @cached(ttl=3600, cache=SimpleMemoryCache, key="4k")
     async def fetch_4k(self, ctx, tag):  # 4k fetcher
@@ -643,8 +667,6 @@ class BooruCore:
                      file_url = "https://us.rule34.xxx//images/" + booru.get("directory") + "/" + booru.get("image")
                 if booru["provider"] == "Safebooru":
                      file_url = "https://safebooru.org//images/" + booru.get("directory") + "/" + booru.get("image")
-                if booru["provider"] == "Reddit":
-                     file_url = booru["data"]["url"]
                 if booru["provider"] == "Oboobs":
                      file_url = "http://media.oboobs.ru/" + booru["preview"]
                 if booru["provider"] == "Obutts":
@@ -667,7 +689,7 @@ class BooruCore:
                 if booru["provider"] == "e621":
                     booru_post = "https://e621.net/post/show/" + str(booru.get("id"))
                 if booru["provider"] == "Reddit":
-                    booru_post = "https://reddit.com" + booru["data"]["permalink"]
+                     booru_post = "https://reddit.com" + booru["data"]["permalink"]
                 if booru["provider"] == "Oboobs":
                      booru_post = "http://media.oboobs.ru/" + booru["preview"]
                 if booru["provider"] == "Obutts":
@@ -702,8 +724,6 @@ class BooruCore:
                  file_url = "https://us.rule34.xxx//images/" + booru.get("directory") + "/" + booru.get("image")
             if booru["provider"] == "Safebooru":
                  file_url = "https://safebooru.org//images/" + booru.get("directory") + "/" + booru.get("image")
-            if booru["provider"] == "Reddit":
-                 file_url = booru["data"]["url"]
             if booru["provider"] == "Oboobs":
                  file_url = "http://media.oboobs.ru/" + booru["preview"]
             if booru["provider"] == "Obutts":

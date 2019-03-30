@@ -251,10 +251,17 @@ class Actions(BaseCog):
                 "https://img2.gelbooru.com/images/1d/8b/1d8b77bf65858101a82d195deaa39252.gif",
                 "https://img2.gelbooru.com/images/c0/22/c022dc318c7f014d7bac6c2300b9f7a2.gif",
             ],
-            "baka": [
-              "https://media2.giphy.com/media/Gf3AUz3eBNbTW/giphy.gif",
-            ],
             "smug": [
+                "https://cdn.nekos.life/v3/sfw/gif/smug/smug_027.gif",
+                "https://cdn.nekos.life/v3/sfw/gif/smug/smug_057.gif",
+                "https://i.kym-cdn.com/photos/images/original/001/087/562/93c.gif",
+                "https://i.kym-cdn.com/photos/images/newsfeed/001/161/167/eda.gif",
+                "https://media1.tenor.com/images/d9b3127da3f9419cbb28f9f7c00860d8/tenor.gif?itemid=9588226",
+                "https://media1.tenor.com/images/0097fa7f957477f9edc5ff147bb9a5ad/tenor.gif?itemid=12390496",
+
+            ],
+            "baka": [
+                "https://media2.giphy.com/media/Gf3AUz3eBNbTW/giphy.gif",
             ],
         }
         self.config.register_global(**default_global)

@@ -491,7 +491,7 @@ class Roleplay(BaseCog):
 
     @commands.command()
     @commands.bot_has_permissions(embed_links=True)
-    async def smug(self, ctx, *):
+    async def smug(self, ctx):
         """Be smug towards someone!"""
 
         author = ctx.message.author

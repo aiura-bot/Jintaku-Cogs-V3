@@ -491,8 +491,8 @@ class Actions(BaseCog):
 
     @commands.command()
     @commands.bot_has_permissions(embed_links=True)
-    async def smug(self, ctx, *, user: discord.Member):
-        """be smug towards someone!"""
+    async def smug(self, ctx, *):
+        """Be smug towards someone!"""
 
         author = ctx.message.author
         images = await self.config.smug()
@@ -505,26 +505,26 @@ class Actions(BaseCog):
 
         # Build Embed
         embed = discord.Embed()
-        embed.description = f"**{author.mention} is smug towards {user.mention}**"
+        embed.description = f"**{author.mention} is smug**"
         embed.set_footer(text="Made with the help of nekos.life")
         embed.set_image(url=images[i])
         await ctx.send(embed=embed)
 
-    @commands.command()
-    @commands.cooldown(1, 5, commands.BucketType.user)
-    async def phcomment(self, ctx, *, comment: str):
-        """PronHub Comment Image"""
-        await ctx.trigger_typing()
-        async with aiohttp.ClientSession() as cs:
-            async with cs.get(f"https://nekobot.xyz/api/imagegen?type=phcomment"
-                              f"&image={ctx.author.avatar_url_as(format='png')}"
-                              f"&text={comment}&username={ctx.author.name}") as r:
-                res = await r.json()
-        if not res["success"]:
-            return await ctx.send("**Failed to successfully get image.**")
-        embed = discord.Embed(colour=0x0066FF)
-        embed.set_image(url=res["message"])
-        await ctx.send(embed=embed)
+    #@commands.command()
+    #@commands.cooldown(1, 5, commands.BucketType.user)
+    #async def phcomment(self, ctx, *, comment: str):
+    #    """PronHub Comment Image"""
+    #    await ctx.trigger_typing()
+    #    async with aiohttp.ClientSession() as cs:
+    #        async with cs.get(f"https://nekobot.xyz/api/imagegen?type=phcomment"
+    #                          f"&image={ctx.author.avatar_url_as(format='png')}"
+    #                          f"&text={comment}&username={ctx.author.name}") as r:
+    #            res = await r.json()
+    #    if not res["success"]:
+    #        return await ctx.send("**Failed to successfully get image.**")
+    #    embed = discord.Embed(colour=0x0066FF)
+    #    embed.set_image(url=res["message"])
+    #    await ctx.send(embed=embed)
 
     @commands.command()
     @commands.cooldown(1, 5, commands.BucketType.user)

@@ -19,7 +19,7 @@ log.addHandler(console)
 BaseCog = getattr(commands, "Cog", object)
 
 
-class Actions(BaseCog):
+class Roleplay(BaseCog):
     """Interact with people!"""
 
     def __init__(self):

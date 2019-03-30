@@ -3,6 +3,7 @@ from redbot.core import commands, Config
 from random import randint
 import aiohttp
 import logging
+import random
 
 log = logging.getLogger("Roleplay")  # Thanks to Sinbad for the example code for logging
 log.setLevel(logging.DEBUG)
@@ -18,7 +19,7 @@ log.addHandler(console)
 BaseCog = getattr(commands, "Cog", object)
 
 
-class Roleplay(BaseCog):
+class Actions(BaseCog):
     """Interact with people!"""
 
     def __init__(self):
@@ -250,6 +251,11 @@ class Roleplay(BaseCog):
                 "https://img2.gelbooru.com/images/1d/8b/1d8b77bf65858101a82d195deaa39252.gif",
                 "https://img2.gelbooru.com/images/c0/22/c022dc318c7f014d7bac6c2300b9f7a2.gif",
             ],
+            "baka": [
+              "https://media2.giphy.com/media/Gf3AUz3eBNbTW/giphy.gif",
+            ],
+            "smug": [
+            ],
         }
         self.config.register_global(**default_global)
 
@@ -454,6 +460,105 @@ class Roleplay(BaseCog):
         embed.set_footer(text="Made with the help of nekos.life")
         embed.set_image(url=images[i])
         await ctx.send(embed=embed)
+
+    @commands.command()
+    @commands.bot_has_permissions(embed_links=True)
+    async def baka(self, ctx, *, user: discord.Member):
+        """Baka someone!"""
+
+        author = ctx.message.author
+        images = await self.config.baka()
+
+        baka = await self.fetch_nekos_life(ctx, "baka")
+        images.extend(baka)
+
+        mn = len(images)
+        i = randint(0, mn - 1)
+
+        # Build Embed
+        embed = discord.Embed()
+        embed.description = f"**{author.mention} bakas {user.mention}**"
+        embed.set_footer(text="Made with the help of nekos.life")
+        embed.set_image(url=images[i])
+        await ctx.send(embed=embed)
+
+    @commands.command()
+    @commands.bot_has_permissions(embed_links=True)
+    async def smug(self, ctx, *, user: discord.Member):
+        """be smug towards someone!"""
+
+        author = ctx.message.author
+        images = await self.config.smug()
+
+        smug = await self.fetch_nekos_life(ctx, "smug")
+        images.extend(smug)
+
+        mn = len(images)
+        i = randint(0, mn - 1)
+
+        # Build Embed
+        embed = discord.Embed()
+        embed.description = f"**{author.mention} is smug towards {user.mention}**"
+        embed.set_footer(text="Made with the help of nekos.life")
+        embed.set_image(url=images[i])
+        await ctx.send(embed=embed)
+
+    @commands.command()
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def phcomment(self, ctx, *, comment: str):
+        """PronHub Comment Image"""
+        await ctx.trigger_typing()
+        async with aiohttp.ClientSession() as cs:
+            async with cs.get(f"https://nekobot.xyz/api/imagegen?type=phcomment"
+                              f"&image={ctx.author.avatar_url_as(format='png')}"
+                              f"&text={comment}&username={ctx.author.name}") as r:
+                res = await r.json()
+        if not res["success"]:
+            return await ctx.send("**Failed to successfully get image.**")
+        embed = discord.Embed(colour=0x0066FF)
+        embed.set_image(url=res["message"])
+        await ctx.send(embed=embed)
+
+    @commands.command()
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def ship(self, ctx, user1: discord.Member, user2: discord.Member = None):
+        """Ship OwO"""
+        if user2 is None:
+            user2 = ctx.author
+
+        await ctx.trigger_typing()
+        if user1.avatar:
+            user1url = "https://cdn.discordapp.com/avatars/%s/%s.png" % (user1.id, user1.avatar,)
+        else:
+            user1url = "https://cdn.discordapp.com/embed/avatars/1.png"
+        if user2.avatar:
+            user2url = "https://cdn.discordapp.com/avatars/%s/%s.png" % (user2.id, user2.avatar,)
+        else:
+            user2url = "https://cdn.discordapp.com/embed/avatars/1.png"
+
+        self_length = len(user1.name)
+        first_length = round(self_length / 2)
+        first_half = user1.name[0:first_length]
+        usr_length = len(user2.name)
+        second_length = round(usr_length / 2)
+        second_half = user2.name[second_length:]
+        finalName = first_half + second_half
+
+        score = random.randint(0, 100)
+        filled_progbar = round(score / 100 * 10)
+        counter_ = '█' * filled_progbar + '‍ ‍' * (10 - filled_progbar)
+
+        #async with aiohttp.ClientSession() as cs:
+        #    async with cs.get("https://nekobot.xyz/api/imagegen?type=ship&user1=%s&user2=%s" % (user1url, user2url,)) as r:
+        #        res = await r.json()
+
+        em = discord.Embed(color=0xDEADBF)
+        em.title = "%s ❤ %s" % (user1.name, user2.name,)
+        em.description = f"**Love %**\n" \
+                         f"`{counter_}` **{score}%**\n\n{finalName}"
+        #em.set_image(url=res["message"])
+
+        await ctx.send(embed=em)
 
     async def fetch_nekos_life(self, ctx, rp_action):
 

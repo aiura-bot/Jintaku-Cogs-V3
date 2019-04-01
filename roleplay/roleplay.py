@@ -287,7 +287,7 @@ class Roleplay(BaseCog):
         embed.set_image(url=images[i])
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(aliases=['hug'])
     @commands.bot_has_permissions(embed_links=True)
     async def cuddle(self, ctx, *, user: discord.Member):
         """Cuddles a user!"""
@@ -301,9 +301,14 @@ class Roleplay(BaseCog):
         mn = len(images)
         i = randint(0, mn - 1)
 
+        if ctx.invoked_with == 'hug':
+            action = 'hugs'
+        else:
+            action = 'cuddles'
+
         # Build Embed
         embed = discord.Embed()
-        embed.description = f"**{author.mention} cuddles {user.mention}**"
+        embed.description = f"**{author.mention} {action} {user.mention}**"
         embed.set_footer(text="Made with the help of nekos.life")
         embed.set_image(url=images[i])
         await ctx.send(embed=embed)
@@ -329,7 +334,7 @@ class Roleplay(BaseCog):
         embed.set_image(url=images[i])
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(aliases=['punch'])
     @commands.bot_has_permissions(embed_links=True)
     async def slap(self, ctx, *, user: discord.Member):
         """Slaps a user!"""
@@ -343,9 +348,14 @@ class Roleplay(BaseCog):
         mn = len(images)
         i = randint(0, mn - 1)
 
+        if ctx.invoked_with == 'punch':
+            action = 'punches'
+        else:
+            action = 'slaps'
+
         # Build Embed
         embed = discord.Embed()
-        embed.description = f"**{author.mention} slaps {user.mention}**"
+        embed.description = f"**{author.mention} {action} {user.mention}**"
         embed.set_footer(text="Made with the help of nekos.life")
         embed.set_image(url=images[i])
         await ctx.send(embed=embed)

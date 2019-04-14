@@ -169,7 +169,7 @@ class Boorualias:
 
         tag_default = " black_hole"
         tag += tag_default
-        boards = ["dan", "gel", "kon", "yan", "safe", "trap", "nekos_nsfw_trap"]
+        boards = ["dan", "gel", "kon", "yan", "safe"]
 
         await self.generic_alias_booru(ctx, boards, tag)
 

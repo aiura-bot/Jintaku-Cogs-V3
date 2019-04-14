@@ -166,7 +166,7 @@ class Boorualias:
     async def blackhole(self, ctx, *, tag=""):
         """Blackhole-chan images"""
 
-        tag_default = " black_hole"
+        tag_default = " blackhole-chan"
         tag += tag_default
         boards = ["dan", "gel", "kon", "yan", "safe"]
 

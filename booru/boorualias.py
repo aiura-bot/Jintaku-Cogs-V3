@@ -160,3 +160,16 @@ class Boorualias:
 
         await self.generic_alias_booru(ctx, boards, tag)
 
+    @commands.command()
+    @commands.guild_only()
+    @commands.is_nsfw()
+    @commands.bot_has_permissions(embed_links=True, add_reactions=True)
+    async def blackhole(self, ctx, *, tag=""):
+        """Blackhole-chan images"""
+
+        tag_default = " black_hole"
+        tag += tag_default
+        boards = ["dan", "gel", "kon", "yan", "safe", "trap", "nekos_nsfw_trap"]
+
+        await self.generic_alias_booru(ctx, boards, tag)
+

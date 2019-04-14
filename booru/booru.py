@@ -122,6 +122,7 @@ class Booru(BaseCog, BooruCore, Booruset, Boorualias):
         await self.generic_specific_source(ctx, board, tag)
 
     @commands.group()
+    @commands.is_nsfw()
     async def reddits(self, ctx):
         """Query sources for all the subreddits!"""
         pass

@@ -162,7 +162,6 @@ class Boorualias:
 
     @commands.command()
     @commands.guild_only()
-    @commands.is_nsfw()
     @commands.bot_has_permissions(embed_links=True, add_reactions=True)
     async def blackhole(self, ctx, *, tag=""):
         """Blackhole-chan images"""
